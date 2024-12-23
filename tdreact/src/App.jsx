@@ -13,11 +13,17 @@ function Header(){
     );
 }
 
-function Footer(){
-    return<p>
-        Tous droits réservés -Nassib Omar
-    </p>;
+function Footer() {
+    const currentYear = new Date().getFullYear();
+    const authorName = "Omar Nassib";
+
+    return (
+        <p>
+            ©️ {currentYear} - {authorName}, Tous droits réservés
+        </p>
+    );
 }
+
 function MainContent() {
     const [currentDate, setCurrentDate] = useState(new Date());
 
