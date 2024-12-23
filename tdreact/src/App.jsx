@@ -3,11 +3,23 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+function Header(){
+    return(
+        <header>
+            <img src="https://tse3.mm.bing.net/th?id=OIP.a-YN_jkAnb0MGFFEFR-d3wHaGB&pid=Api&P=0&h=180" alt="Cupra"/>
+            <h1>Introduction à React</h1>
+            <h2>A la découverte des premières notions de React</h2>
+        </header>
+    );
+}
+
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+        <Header />
+
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
