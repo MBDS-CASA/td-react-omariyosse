@@ -6,7 +6,7 @@ import './App.css'
 function Header(){
     return(
         <header>
-            <img src="https://tse3.mm.bing.net/th?id=OIP.a-YN_jkAnb0MGFFEFR-d3wHaGB&pid=Api&P=0&h=180" alt="Cupra"/>
+            <img src="https://tse3.mm.bing.net/th?id=OIP.Gmnztw8QVYkN3SZuNHKfkAAAAA&pid=Api&P=0&h=180" alt="Cupra"/>
             <h1>Introduction à React</h1>
             <h2>A la découverte des premières notions de React</h2>
         </header>
@@ -47,38 +47,67 @@ function MainContent() {
         </p>
     );
 }
-function App() {
-  const [count, setCount] = useState(0)
+function RandomItem({ item }) {
+    if (!item) return <p>Chargement...</p>;
 
-  return (
-    <>
-        <Header />
-        <MainContent />
-
-
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Omar Nassib Using Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-        <Footer />
-    </>
-  )
+    return (
+        <div style={{ border: "1px solid #ccc", padding: "16px", margin: "16px" }}>
+            <h3>{item.course}</h3>
+            <p>
+                Étudiant: {item.student.firstname} {item.student.lastname} (ID:{" "}
+                {item.student.id})
+            </p>
+            <p>Date: {item.date}</p>
+            <p>Note: {item.grade}</p>
+        </div>
+    );
 }
 
-export default App
+function App() {
+    const [data, setData] = useState([]);
+    const [randomItem, setRandomItem] = useState(null);
+
+    useEffect(() => {
+        fetch("/data.json")
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to load data");
+                }
+                return response.json();
+            })
+            .then((jsonData) => setData(jsonData))
+            .catch((error) =>
+                console.error("Erreur lors du chargement des données:", error)
+            );
+    }, []);
+
+    const pickRandomItem = () => {
+        if (data.length > 0) {
+            const randomIndex = Math.floor(Math.random() * data.length);
+            setRandomItem(data[randomIndex]);
+        }
+    };
+
+    return (
+        <>
+            <Header />
+            <MainContent />
+            <div>
+                <a href="https://vite.dev" target="_blank" rel="noreferrer">
+                    <img src={viteLogo} className="logo" alt="Vite logo" />
+                </a>
+                <a href="https://react.dev" target="_blank" rel="noreferrer">
+                    <img src={reactLogo} className="logo react" alt="React logo" />
+                </a>
+            </div>
+            <h1>Omar Nassib Using Vite + React</h1>
+            <div className="card">
+                <button onClick={pickRandomItem}>Afficher un élément aléatoire</button>
+            </div>
+            <RandomItem item={randomItem} />
+            <Footer />
+        </>
+    );
+}
+
+export default App;
