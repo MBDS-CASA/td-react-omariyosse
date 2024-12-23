@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -18,11 +18,28 @@ function Footer(){
         Tous droits réservés -Nassib Omar
     </p>;
 }
-
 function MainContent() {
-    return <p>
-        Ici , Nous afficherons des informations interessantes ;)
-    </p>;
+    const [currentDate, setCurrentDate] = useState(new Date());
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentDate(new Date());
+        }, 1000);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
+
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateString = currentDate.toLocaleDateString('fr-FR', options);
+    const timeString = currentDate.toLocaleTimeString('fr-FR');
+
+    return (
+        <p>
+            Bonjour, on est le {dateString} et il est {timeString}
+        </p>
+    );
 }
 function App() {
   const [count, setCount] = useState(0)
