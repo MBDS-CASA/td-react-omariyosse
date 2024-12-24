@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "student": {
+      "id": "S001",
+      "firstname": "Omar",
+      "lastname": "Nassib"
+    },
+    "course": "Mathématiques",
+    "grade": 15,
+    "date": "2024-12-20"
+  },
+  {
+    "id": 2,
+    "student": {
+      "id": "S002",
+      "firstname": "Marie",
+      "lastname": "Durand"
+    },
+    "course": "Physique",
+    "grade": 18,
+    "date": "2024-12-21"
+  },
+  {
+    "id": 3,
+    "student": {
+      "id": "S003",
+      "firstname": "Luc",
+      "lastname": "Martin"
+    },
+    "course": "Informatique",
+    "grade": 14,
+    "date": "2024-12-19"
+  },
+  {
+    "id": 4,
+    "student": {
+      "id": "S004",
+      "firstname": "Sophie",
+      "lastname": "Lemoine"
+    },
+    "course": "Chimie",
+    "grade": 17,
+    "date": "2024-12-18"
+  }
+]

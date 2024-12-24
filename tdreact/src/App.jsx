@@ -2,13 +2,19 @@ import { useState, useEffect } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import NotesTable from './components/NotesTable';
+import StudentsTable from './components/StudentsTable';
+import ClassTable from './components/ClassTable';
+import TeachersTable from './components/TeachersTable';
+import AboutSection from "./components/AboutSection";
+
 
 function Header() {
     return (
         <header>
             <img src="https://tse3.mm.bing.net/th?id=OIP.Gmnztw8QVYkN3SZuNHKfkAAAAA&pid=Api&P=0&h=180" alt="Cupra" />
-            <h1>Introduction à React</h1>
-            <h2>A la découverte des premières notions de React</h2>
+            <h1>Introduction à Votre Université</h1>
+            <h2>A la découverte de votre Université CUPRA</h2>
         </header>
     );
 }
@@ -92,10 +98,11 @@ function Menu({ menuItems, activeItem, setActiveItem }) {
 function App() {
     const menuItems = [
         { id: 1, name: "Accueil", component: <p>Bienvenue sur la page d'accueil !</p> },
-        { id: 2, name: "Notes", component: <p>Gestion des notes des étudiants.</p> },
-        { id: 3, name: "Etudiants", component: <p>Liste des étudiants inscrits.</p> },
-        { id: 4, name: "Matières", component: <p>Gestion des matières enseignées.</p> },
-        { id: 5, name: "À propos", component: <p>Informations sur l'application.</p> },
+        { id: 2, name: "Notes", component: <NotesTable /> },
+        { id: 3, name: "Etudiants", component: <StudentsTable /> },
+        { id: 4, name: "Matières", component: <ClassTable /> },
+        { id: 5, name: "Enseignants", component: <TeachersTable /> },
+        { id: 6, name: "À propos", component: <AboutSection /> },
     ];
 
     const [activeItem, setActiveItem] = useState(menuItems[0].id);
@@ -125,29 +132,29 @@ function App() {
 
     return (
         <>
-            <Menu menuItems={menuItems} activeItem={activeItem} setActiveItem={setActiveItem} />
-            <Header />
-            <MainContent />
+            <Menu menuItems={menuItems} activeItem={activeItem} setActiveItem={setActiveItem}/>
+            <Header/>
+            <MainContent/>
 
             <div>
                 <a href="https://vite.dev" target="_blank" rel="noreferrer">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
+                    <img src={viteLogo} className="logo" alt="Vite logo"/>
                 </a>
                 <a href="https://react.dev" target="_blank" rel="noreferrer">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
+                    <img src={reactLogo} className="logo react" alt="React logo"/>
                 </a>
             </div>
             <h1>Omar Nassib Using Vite + React</h1>
             <div className="card">
                 <button onClick={pickRandomItem}>Afficher un élément aléatoire</button>
             </div>
-            <RandomItem item={randomItem} />
+            <RandomItem item={randomItem}/>
 
             <div className="menu-content">
                 {menuItems.find((item) => item.id === activeItem).component}
             </div>
 
-            <Footer />
+            <Footer/>
         </>
     );
 }

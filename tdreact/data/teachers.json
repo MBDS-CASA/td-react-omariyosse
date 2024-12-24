@@ -1,0 +1,30 @@
+[
+  {
+    "id": "T001",
+    "firstname": "Alain",
+    "lastname": "Dupont",
+    "subject": "Mathématiques",
+    "email": "alain.dupont@example.com"
+  },
+  {
+    "id": "T002",
+    "firstname": "Marie",
+    "lastname": "Lemoine",
+    "subject": "Physique",
+    "email": "marie.lemoine@example.com"
+  },
+  {
+    "id": "T003",
+    "firstname": "Julien",
+    "lastname": "Moreau",
+    "subject": "Informatique",
+    "email": "julien.moreau@example.com"
+  },
+  {
+    "id": "T004",
+    "firstname": "Sophie",
+    "lastname": "Martin",
+    "subject": "Chimie",
+    "email": "sophie.martin@example.com"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "C001",
+    "name": "Mathématiques",
+    "teacher": "Dr. Alain Dupont",
+    "credits": 3
+  },
+  {
+    "id": "C002",
+    "name": "Physique",
+    "teacher": "Prof. Marie Lemoine",
+    "credits": 4
+  },
+  {
+    "id": "C003",
+    "name": "Informatique",
+    "teacher": "Dr. Julien Moreau",
+    "credits": 5
+  },
+  {
+    "id": "C004",
+    "name": "Chimie",
+    "teacher": "Prof. Sophie Martin",
+    "credits": 3
+  }
+]
