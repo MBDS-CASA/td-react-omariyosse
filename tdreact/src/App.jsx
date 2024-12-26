@@ -1,18 +1,23 @@
-import { useState, useEffect } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import NotesTable from './components/NotesTable';
-import StudentsTable from './components/StudentsTable';
-import ClassTable from './components/ClassTable';
-import TeachersTable from './components/TeachersTable';
+import { useState, useEffect } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import NotesTable from "./components/NotesTable";
+import StudentsTable from "./components/StudentsTable";
+import ClassTable from "./components/ClassTable";
+import TeachersTable from "./components/TeachersTable";
 import AboutSection from "./components/AboutSection";
-
+import LoginForm from "./components/LoginForm";
+import AppRouter from "./AppRouter";
+import LinkWrapper from "./components/LinkWrapper"; // Importer LinkWrapper
 
 function Header() {
     return (
         <header>
-            <img src="https://tse3.mm.bing.net/th?id=OIP.Gmnztw8QVYkN3SZuNHKfkAAAAA&pid=Api&P=0&h=180" alt="Cupra" />
+            <img
+                src="https://tse3.mm.bing.net/th?id=OIP.Gmnztw8QVYkN3SZuNHKfkAAAAA&pid=Api&P=0&h=180"
+                alt="Cupra"
+            />
             <h1>Introduction à Votre Université</h1>
             <h2>A la découverte de votre Université CUPRA</h2>
         </header>
@@ -43,30 +48,14 @@ function MainContent() {
         };
     }, []);
 
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const dateString = currentDate.toLocaleDateString('fr-FR', options);
-    const timeString = currentDate.toLocaleTimeString('fr-FR');
+    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    const dateString = currentDate.toLocaleDateString("fr-FR", options);
+    const timeString = currentDate.toLocaleTimeString("fr-FR");
 
     return (
         <p>
             Bonjour, on est le {dateString} et il est {timeString}
         </p>
-    );
-}
-
-function RandomItem({ item }) {
-    if (!item) return <p>Chargement...</p>;
-
-    return (
-        <div style={{ border: "1px solid #ccc", padding: "16px", margin: "16px" }}>
-            <h3>{item.course}</h3>
-            <p>
-                Étudiant: {item.student.firstname} {item.student.lastname} (ID:{" "}
-                {item.student.id})
-            </p>
-            <p>Date: {item.date}</p>
-            <p>Note: {item.grade}</p>
-        </div>
     );
 }
 
@@ -96,66 +85,59 @@ function Menu({ menuItems, activeItem, setActiveItem }) {
 }
 
 function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userInfo, setUserInfo] = useState(null);
+    const [activeItem, setActiveItem] = useState(1);
+
     const menuItems = [
-        { id: 1, name: "Accueil", component: <p>Bienvenue sur la page d'accueil !</p> },
-        { id: 2, name: "Notes", component: <NotesTable /> },
-        { id: 3, name: "Etudiants", component: <StudentsTable /> },
-        { id: 4, name: "Matières", component: <ClassTable /> },
-        { id: 5, name: "Enseignants", component: <TeachersTable /> },
-        { id: 6, name: "À propos", component: <AboutSection /> },
+        { id: 1, name: "Accueil", component: <p>Bienvenue sur la page d'accueil !</p>, requiresAuth: false },
+        { id: 2, name: "Notes", component: <NotesTable />, requiresAuth: true },
+        { id: 3, name: "Étudiants", component: <StudentsTable />, requiresAuth: true },
+        { id: 4, name: "Matières", component: <ClassTable />, requiresAuth: true },
+        { id: 5, name: "Enseignants", component: <TeachersTable />, requiresAuth: true },
+        { id: 6, name: "À propos", component: <AboutSection />, requiresAuth: true },
     ];
 
-    const [activeItem, setActiveItem] = useState(menuItems[0].id);
-    const [data, setData] = useState([]);
-    const [randomItem, setRandomItem] = useState(null);
+    const handleLogin = (user) => {
+        setIsLoggedIn(true);
+        setUserInfo(user);
+        alert(`Bienvenue, ${user.username} Vous êtes connecté.`);
+    };
 
-    useEffect(() => {
-        fetch("/data.json")
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to load data");
-                }
-                return response.json();
-            })
-            .then((jsonData) => setData(jsonData))
-            .catch((error) =>
-                console.error("Erreur lors du chargement des données:", error)
-            );
-    }, []);
-
-    const pickRandomItem = () => {
-        if (data.length > 0) {
-            const randomIndex = Math.floor(Math.random() * data.length);
-            setRandomItem(data[randomIndex]);
-        }
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setUserInfo(null);
     };
 
     return (
-        <>
-            <Menu menuItems={menuItems} activeItem={activeItem} setActiveItem={setActiveItem}/>
-            <Header/>
-            <MainContent/>
+        <div>
+            <Header />
+            <MainContent />
+            <AppRouter />
+            <Menu menuItems={menuItems} activeItem={activeItem} setActiveItem={setActiveItem} />
 
             <div>
-                <a href="https://vite.dev" target="_blank" rel="noreferrer">
-                    <img src={viteLogo} className="logo" alt="Vite logo"/>
-                </a>
-                <a href="https://react.dev" target="_blank" rel="noreferrer">
-                    <img src={reactLogo} className="logo react" alt="React logo"/>
-                </a>
+                <h1>Université CUPRA</h1>
+                {!isLoggedIn ? (
+                    <LoginForm onLogin={handleLogin} />
+                ) : (
+                    <div>
+                        <h2>Bienvenue, {userInfo?.username}!</h2>
+                        <button onClick={handleLogout} style={{ padding: "10px", cursor: "pointer" }}>
+                            Se déconnecter
+                        </button>
+                    </div>
+                )}
             </div>
-            <h1>Omar Nassib Using Vite + React</h1>
-            <div className="card">
-                <button onClick={pickRandomItem}>Afficher un élément aléatoire</button>
-            </div>
-            <RandomItem item={randomItem}/>
 
             <div className="menu-content">
-                {menuItems.find((item) => item.id === activeItem).component}
+                {menuItems.find((item) => item.id === activeItem && (!item.requiresAuth || isLoggedIn))?.component || (
+                    <p>Vous n'avez pas l'autorisation d'accéder à cette page , Se connecter svp :)</p>
+                )}
             </div>
 
-            <Footer/>
-        </>
+            <Footer />
+        </div>
     );
 }
 
